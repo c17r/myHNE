@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"target": "es6"
+	},
+	"files": [
+		"src/",
+		"webpack.config.babel.js"
+	]
+}

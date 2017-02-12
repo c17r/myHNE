@@ -1,0 +1,249 @@
+$header-color: #d74937;
+$submitter-color: rgb(184, 184, 184);
+$submitter-link-color: rgb(102, 102, 102);
+$action-link-color: #000;
+$karma-color: #FFF;
+$checkbook-color: #e6e6df;
+$index-hover-color: #dd4b39;
+$menu-hover-color: #FFF;
+
+.myhne-new-comment {
+	table {
+		td.ind {
+			border-right: 2px solid $header-color;
+		}
+	}
+}
+
+.myhne-new-parent {
+	table {
+		td.ind {
+			border-right: 2px solid $submitter-link-color;
+		}
+	}
+}
+
+.myhne-story-highlight, .myhne-comment-highlight
+{
+	border: 1px solid black !important;
+	background-color: #c6c6bf !important;
+}
+
+.myhne-highlight-op {
+	color: $index-hover-color !important;
+}
+
+.myhne-highlight-new-user {
+	font {
+		color: #3c963c;
+	}
+}
+
+.myhne-parent-container {
+	display: none;
+	border: #000 2px solid;
+	width: 40%;
+	position: absolute;
+	background-color: rgb(246, 246, 239);
+	padding: 8px;
+	color: #000;
+	left: 200px;
+	cursor: default;
+	border-radius: 5px;
+
+	.myhne-parent-header {
+		border-bottom: 1px #000 solid;
+
+		.myhne-parent-header-link {
+			float:right;
+		}
+	}
+
+	.myhne-parent-content {
+		padding-top: 5px;
+	}
+}
+
+.myhne-comment-count {
+    padding-right: 15px;
+}
+
+.myhne-ir-container {
+	padding-top: 20px;
+	width: 400px;
+
+	textarea {
+		width: 100%;
+		height: 80px;
+	}
+
+	button {
+		font-family: "Helvetica Neue", Arial, sans-serif;
+		padding: 5px 10px;
+		border: 1px solid #666;
+		border-radius: 2px;
+		font-size: 13px;
+	}
+
+	div {
+		padding-top: 5px;
+
+		.myhne-ir-submit {
+			background-color: $header-color;
+			color: #FFF;
+		}
+
+		.myhne-ir-cancel {
+
+		}
+	}
+}
+
+.myhne-submitter {
+    padding-left: 5px;
+    font-size: 11px;
+    color: $submitter-color;
+
+	a {
+		color: $submitter-link-color;
+	}
+}
+
+.myhne-age {
+    padding-left: 5px;
+    font-size: 11px;
+}
+
+.myhne-actions {
+    padding-left: 5px;
+    font-size: 11px;
+
+	&:before {
+		content: "[ ";
+	}
+
+	a {
+		color: $action-link-color;
+
+		&:after {
+			content: " | ";
+		}
+
+		&:last-child:after {
+			content: "";
+		}
+	}
+
+	&:after {
+		content: " ]";
+	}
+}
+
+.myhne-top-nav {
+    padding: 0 10;
+}
+
+.myhne-karma {
+    color: $karma-color;
+}
+
+$dropdown-color: #FFF;
+
+.dropdown {
+	position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+	&:after {
+		content: '▼';
+		font-size: 11px;
+		padding-left: 2px;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		left: -10px;
+		text-align: left;
+		padding-top: 10px;
+		background-color: $header-color;
+
+		ul {
+			padding: 0px 15px;
+			margin: 0px;
+
+			li {
+				list-style: none;
+				padding-bottom: 10px;
+
+				&:last-child {
+				    padding-bottom: 5px;
+				}
+			}
+		}
+	}
+
+	&:hover {
+		color: $dropdown-color;
+
+		.dropdown-content {
+			display:block;
+		}
+	}
+}
+
+/*
+    Overrides to existing styles, objects
+*/
+
+body {
+  visibility: hidden;
+  margin: 0;
+}
+
+.header-row {
+    height: 40px;
+	background-color: $header-color;
+}
+
+.votearrow {
+    padding-right: 15px !important;
+}
+
+table#hnmain {
+    width: 100% !important;
+}
+
+table.itemlist {
+	margin: 20px auto 0px auto !important;
+
+	tr.athing {
+		&:nth-child(even) {
+			background-color: $checkbook-color;
+
+			td {
+				padding: 5px 0px;
+			}
+		}
+
+		td.title:first-child {
+			width: 80px;
+		}
+
+		td.votelinks {
+			width: 60px;
+		}
+
+		td.title:last-child {
+			padding-right: 18px !important;
+		}
+	}
+}
+
+td.subtext a.hnuser, a:hover {
+  color: $index-hover-color !important;
+}
+
+.pagetop a:hover {
+    color: $menu-hover-color !important;
+}

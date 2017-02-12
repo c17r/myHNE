@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Hacker News Experience Options</title>
+		<style>
+		</style>
+		<script src="options.js"></script>
+	</head>
+	<body>
+		<table>
+			<tbody>
+				<tr>
+					<th>
+						'O'pen Behavior
+					</th>
+					<td>
+						<select name="open_order">
+							<option value="do_nothing">Do Nothing</option>
+							<option value="story_only">Story Links Only</option>
+							<option value="comments_only">Comments Only</option>
+							<option value="story_comments">Story then Comments</option>
+							<option value="comments_story">Comments then Story</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<th>
+						Open Link Style
+					</th>
+					<td>
+						<select name="open_style">
+							<option value="open_tabs">Open Tabs</option>
+							<option value="open_windows">Open Windows</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<center>
+							<div id="status"></div>
+							<button id="save">Save</button>
+						</center>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

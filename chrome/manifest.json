@@ -1,0 +1,49 @@
+{
+	"name": "{{prop?title!../package.json}}",
+	"version": "{{prop?version!../package.json}}",
+	"description": "{{prop?description!../package.json}}",
+	"short_name": "{{prop?name!../package.json}}",
+
+	"manifest_version": 2,
+	"permissions": [
+		"storage",
+		"tabs"
+	],
+
+
+	"background": {
+		"scripts": [
+			"{{./background.entry.js}}"
+		]
+	},
+
+	"icons": {
+		"16": "{{../icons/icon-16.png}}",
+		"48": "{{../icons/icon-48.png}}",
+		"128": "{{../icons/icon-128.png}}"
+	},
+
+	"content_scripts": [
+		{
+			"run_at": "document_end",
+			"all_frames": true,
+			"matches": [
+				"*://news.ycombinator.com/*",
+				"*://news.ycombinator.net/*",
+				"*://news.ycombinator.org/*"
+			],
+
+			"css": [
+				"{{../src/css/myhne.scss}}"
+			],
+
+			"js": [
+				"{{../src/js/foreground.entry.js}}"
+			]
+
+		}
+	],
+
+	"web_accessible_resources": []
+
+}
