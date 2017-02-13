@@ -18,6 +18,9 @@ const PATHS = {
 		'/noobstories',
 
 		'/submitted',
+		'/upvoted',
+		'/favorites',
+		'/hidden',
 	],
 
 	'item': [

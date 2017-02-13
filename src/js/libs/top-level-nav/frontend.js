@@ -29,7 +29,9 @@ const MENUS = {
 		{text: 'profile', url: '/user', title: 'Your Profile and Settings'},
 		{text: 'comments', url: '/threads', title: 'Your Comments and Replies'},
 		{text: 'submitted', url: '/submitted', title: 'Stories You\'ve Submitted'},
-		{text: 'saved', url: '/saved', title: 'Stories you\'ve Voted For'},
+		{text: 'upvoted', url: '/upvoted', title: 'Stories You\'ve Upvoted'},
+		{text: 'favorites', url: '/favorites', title: 'Stories You\'ve Favorited'},
+		{text: 'hidden', url: '/hidden', title: 'Stories You\'ve Hidden'},
 	]
 };
 
