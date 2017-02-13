@@ -12,6 +12,24 @@ function output() {
 	console.log('--');
 }
 
+function lcToItem(arr) {
+	return {
+		lastId: arr[0],
+		commentCount: arr[1],
+
+		ts: arr[arr.length-1],
+	}
+}
+
+function itemToLc(item) {
+	return [
+		Number(item['lastId']),
+		Number(item['commentCount']),
+
+		Number(moment.utc().format('x')),
+	]
+}
+
 function HNCollapse(entries) {
 	function recurse() {
 		const entry = entries.pop();
@@ -44,10 +62,7 @@ function onGetLastComment(storyId, sendResponse) {
 		const entry = data['lc'][storyId];
 
 		if (entry) {
-			const rv = {
-				lastId: entry[0],
-				commentCount: entry[1],
-			}
+			const rv = lcToItem(entry);
 			output('onGetLastComment, found', rv);
 			sendResponse(rv);
 		} else {
@@ -59,21 +74,21 @@ function onGetLastComment(storyId, sendResponse) {
 
 function onGetMassLastComment(storyIds, sendResponse) {
 	chrome.storage.sync.get('lc', function(data) {
-		const rv = _.pickBy(data['lc'], (v, k) => _.find(storyIds, k));
-		sendResponse(rv);
+		const items = data['lc'],
+				rv = _.pickBy(items, (v, k) => storyIds.indexOf(k) != -1);
+		sendResponse(_.mapValues(rv, (arr) => lcToItem(arr)));
 	});
 }
 
 function onSetLastComment(data) {
-	const storyId = Number(data['storyId']),
-		lastId = Number(data['itemInfo']['lastId']),
-		commentCount = Number(data['itemInfo']['commentCount']);
+	const storyId = data['storyId'],
+		arr = itemToLc(data['itemInfo']);
 
 	output('onSetLastComment, data', data, data['itemInfo']);
 
 	chrome.storage.sync.get('lc', function(data) {
 		output('onSetLastComment, BEFORE', data['lc']);
-		data['lc'][storyId] = [lastId, commentCount, Number(moment.utc().format('x'))]
+		data['lc'][storyId] = arr;
 		output('onSetLastComment, AFTER', data['lc']);
 		chrome.storage.sync.set(data);
 	});

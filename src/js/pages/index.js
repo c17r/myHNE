@@ -9,40 +9,43 @@ import highlighter, {PREV, NEXT} from '../libs/highlighter';
 import comments from '../libs/comments/frontend';
 
 const $storyTable = $('table.itemList');
-const storyCount = $storyTable.find('tr.athing').length - 1;
+const storyCount = $storyTable.find('tr.athing').length;
 const highlightClass = 'myhne-story-highlight'
 
 function rankToCommentCount() {
-	$storyTable
-		.find('td.subtext')
-		.each(function() {
-			const $subText = $(this),
-				$story = $subText.parent().prev(),
-				storyId = $story.attr('id'),
-				$comments = $subText.children('a[href^=item]:last').remove(),
-				$rank = $story.find('span.rank').empty();
-			let commentText = $comments.text();
+	const storyIds = $.makeArray($storyTable
+									.find('tr.athing')
+									.map((i, e) => e.id));
 
-			if (/discuss/.test(commentText)) {
-				commentText = '0';
-			} else if (/comment/.test(commentText)) {
-				commentText = commentText.split('\xa0')[0];
-			} else {
-				commentText = 'N/A';
-				$comments = $('<span/>');
-			}
-			comments.getLastComment(storyId)
-				.then((itemInfo) => {
-					if (commentText != 'N/A') {
-						console.log(commentText);
-						console.log(itemInfo['commentCount']);
-						const newCount = Number(commentText) - itemInfo['commentCount'];
-						commentText = `${newCount}/${commentText}`;
+	comments.getMassLastComment(storyIds)
+		.then((entries) => {
+			$storyTable
+				.find('td.subtext')
+				.each((i, e) => {
+					const $subText = $(e),
+						$story = $subText.parent().prev(),
+						$comments = $subText.children('a[href^=item]:last').remove(),
+						$rank = $story.find('span.rank').empty(),
+						storyId = $story.attr('id'),
+						entry = _.find(entries, (v, k) => k == storyId);
+
+					let commentText = $comments.text();
+					if (/discuss/.test(commentText)) {
+						commentText = '0';
+					} else if (/comment/.test(commentText)) {
+						commentText = commentText.split('\xa0')[0];
+					} else {
+						commentText = 'N/A';
+						$comments = $('<span/>');
 					}
-					$comments.text(commentText);
-					$rank.append($comments);
-				})
-				.catch(() => {
+
+					if (entry) {
+						if (commentText != 'N/A') {
+							const newCount = Number(commentText) - entry['commentCount'];
+							commentText = `${newCount}/${commentText}`;
+						}
+					}
+
 					$comments.text(commentText);
 					$rank.append($comments);
 				});

@@ -118,9 +118,16 @@ function getLastComment(storyId) {
 function getMassLastComment(storyIds) {
 	return new Promise((resolve, reject) => {
 		chrome.runtime.sendMessage(
-
+			{method: 'getmasslastcomment', data:storyIds},
+			function(response) {
+				if (response) {
+					resolve(response);
+				} else {
+					reject(response);
+				}
+			}
 		)
-	})
+	});
 }
 
 function setLastComment(storyId, lastId, commentCount) {
@@ -170,4 +177,5 @@ export default {
 	getLastComment,
 	setLastComment,
 	markNewComments,
+	getMassLastComment
 }

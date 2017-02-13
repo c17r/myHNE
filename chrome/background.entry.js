@@ -9,7 +9,7 @@ const FUNCS = {
 	opentabs: opener.onOpenTabs,
 	getlastcomment: comments.onGetLastComment,
 	setlastcomment: comments.onSetLastComment,
-	ongetmasslastcomment: comments.onGetMassLastComment,
+	getmasslastcomment: comments.onGetMassLastComment,
 }
 
 chrome.runtime.onMessage.addListener(
