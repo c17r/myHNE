@@ -1,0 +1,13 @@
+<div class="dropdown">
+	{{username}} ({{karma}})
+	<div class="dropdown-content">
+		<ul>
+			{{#user-down}}
+			<li>
+				{{> _link}}
+			</li>
+			{{/user-down}}
+			<li>{{{logout}}}</li>
+		</ul>
+	</div>
+</div>

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import nav from './libs/top-level-nav';
+import nav from './libs/top-level-nav/frontend';
 import index from './pages/index';
 import item from './pages/item';
 
