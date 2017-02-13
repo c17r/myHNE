@@ -24,10 +24,9 @@ function wire( ...actions) {
 			return;
 		}
 
-		e.preventDefault();
-
 		for(let action of actions) {
 			if (action.keys.indexOf(key) !== -1) {
+				e.preventDefault();
 				action.action(e);
 				return;
 			}
