@@ -10,9 +10,15 @@
 		"tabs"
 	],
 
+	"options_ui": {
+		"page": "{{./options.html}}",
+		"chrome_style": true
+	},
+
 
 	"background": {
 		"scripts": [
+			"{{./options.js}}",
 			"{{./background.entry.js}}"
 		]
 	},

@@ -81,12 +81,12 @@ const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, enviro
 		},
 		module: {
 			loaders: [
-				{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', `babel?${JSON.stringify(babelConfig)}`] },
+				{ test: /\.entry\.js$|options\.js$/, loaders: ['spawn?name=[name].js', `babel?${JSON.stringify(babelConfig)}`] },
 				{ test: /\.js$/, exclude: join(__dirname, 'node_modules'), loader: 'babel', query: babelConfig },
 				{ test: /\.js$/, include: join(__dirname, 'node_modules'), loader: 'babel', query: { plugins: ['transform-dead-code-elimination', 'transform-node-env-inline'], compact: true, babelrc: false } },
 				{ test: /\.mustache$/, loader: 'mustache?noShortcut' },
 				{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
-				{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
+				{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href'] },
 				{ test: /\.(png|gif)$/, exclude: join(__dirname, 'src', 'images'), loader: 'file?name=[name].[ext]' },
 				{ test: /\.(png|gif)$/, include: join(__dirname, 'src', 'images'), loader: 'url' },
 			],

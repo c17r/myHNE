@@ -37,8 +37,9 @@
 	* [ ] upvote count for user (stored in Chrome profile)
 	* [ ] tag note for user (stored in Chrome profile)
 * Settings
-	* [ ] Opener Style: story, comment, story/comment, comment/story ... new window or new tabs
-	* [ ] New Comment Count: show/hide zeros
+	* [X] Opener Behavior: story, comment, story/comment, comment/story
+	* [X] Opener Style: new window or new tabs
+	* [X] New Comment Count: show/hide zeros
 
 # Future:
 * [ ] More than just Chrome

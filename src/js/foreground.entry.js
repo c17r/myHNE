@@ -3,9 +3,12 @@ import $ from 'jquery';
 import nav from './libs/top-level-nav/frontend';
 import index from './pages/index';
 import item from './pages/item';
+import settings from './libs/settings/frontend.js';
 
 const PATHS = {
 	'index': [
+		'/',
+
 		'/news',
 		'/newest',
 
@@ -42,11 +45,13 @@ function init() {
 	$('body').css('visibility', 'visible');
 }
 
-chrome.storage.sync.get({
-	openOrder: 'story_comments',
-	openStyle: 'open_tabs'
-}, function(settings) {
+function updateSettings(s) {
 	window.myhne = window.myhne || {};
-	window.myhne.settings = window.myhne.settings || settings;
-	init();
-});
+	window.myhne.settings = s;
+}
+
+settings.syncSettings(updateSettings)
+	.then((s) => {
+		updateSettings(s);
+		init();
+	});

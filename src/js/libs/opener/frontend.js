@@ -19,13 +19,13 @@ function openTabs(...urls) {
 }
 
 function openBySettings(...urls) {
-	const openStyle = window.myhne.settings.openStyle;
+	const openStyle = window.myhne.settings['open_style'];
 
 	(openStyle == 'open_tabs' ? openTabs : openWindows)(...urls);
 }
 
 function urlOrderBySettings(story, comment) {
-	const openOrder = window.myhne.settings.openOrder;
+	const openOrder = window.myhne.settings['open_order'];
 
 	switch(openOrder) {
 		case 'do_nothing':

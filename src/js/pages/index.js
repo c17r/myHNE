@@ -42,7 +42,9 @@ function rankToCommentCount() {
 					if (entry) {
 						if (commentText != 'N/A') {
 							const newCount = Number(commentText) - entry['commentCount'];
-							commentText = `${newCount}/${commentText}`;
+							if (window.myhne.settings['new_comment_zero'] == 'show_zero' || newCount > 0) {
+								commentText = `${newCount}/${commentText}`;
+							}
 						}
 					}
 
