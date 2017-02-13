@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import settings from '../src/js/libs/settings/frontend.js';
+import settings from '../src/js/libs/settings/frontend';
 
 function save_options() {
 	const $tbody = $('#main tbody'),

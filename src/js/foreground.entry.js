@@ -3,7 +3,7 @@ import $ from 'jquery';
 import nav from './libs/top-level-nav/frontend';
 import index from './pages/index';
 import item from './pages/item';
-import settings from './libs/settings/frontend.js';
+import settings from './libs/settings/frontend';
 
 const PATHS = {
 	'index': [
