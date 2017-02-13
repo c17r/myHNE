@@ -2,6 +2,7 @@ import moment from 'moment';
 
 import comments from '../src/js/libs/comments/backend';
 import opener from '../src/js/libs/opener/backend';
+import debug from '../src/js/utils/debug';
 
 const FUNCS = {
 	masscollapse: comments.onMassCollapse,
@@ -17,12 +18,7 @@ chrome.runtime.onMessage.addListener(
 		const method = request.method.toLowerCase();
 		const data = request.data;
 
-		console.log(`
-		method call:
-		${method}
-		${data}
-		----
-		`);
+		debug('method call:', method, data);
 
 		FUNCS[method](data, sendResponse);
 		return true;

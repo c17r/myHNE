@@ -2,15 +2,7 @@ import _ from 'lodash';
 import $ from 'jquery';
 import moment from 'moment';
 
-const DEBUG_PRINT = true;
-
-function output() {
-	if (!DEBUG_PRINT)
-		return;
-	for(var i = 0; i < arguments.length; i++)
-		console.log(arguments[i]);
-	console.log('--');
-}
+import debug from '../../utils/debug'
 
 function lcToItem(arr) {
 	return {
@@ -34,11 +26,11 @@ function HNCollapse(entries) {
 	function recurse() {
 		const entry = entries.pop();
 		if (entry == undefined) {
-			console.log('No more entries, stopping');
+			debug('HNCollapse', 'No more entries, stopping');
 			return;
 		}
 
-		console.log(`Entry: ${entry.id}, ${entry.un}`);
+		debug('HNCollapse', `Entry: ${entry.id}, ${entry.un}`);
 		const url = `https://news.ycombinator.com/collapse?id=${entry.id}` + (entry.un ? '&un=true': '');
 		$.get(url)
 			.done(() => {
@@ -46,7 +38,7 @@ function HNCollapse(entries) {
 			})
 			.fail(() => {
 				entries.push(entry);
-				console.log(`Failed, retrying`);
+				debug('HNCollapse', `Failed, retrying`);
 				setTimeout(recurse, 250);
 			})
 	}
@@ -63,10 +55,10 @@ function onGetLastComment(storyId, sendResponse) {
 
 		if (entry) {
 			const rv = lcToItem(entry);
-			output('onGetLastComment, found', rv);
+			debug('onGetLastComment, found', rv);
 			sendResponse(rv);
 		} else {
-			output('onGetLastComment, not found');
+			debug('onGetLastComment, not found');
 			sendResponse(null);
 		}
 	});
@@ -84,12 +76,12 @@ function onSetLastComment(data) {
 	const storyId = data['storyId'],
 		arr = itemToLc(data['itemInfo']);
 
-	output('onSetLastComment, data', data, data['itemInfo']);
+	debug('onSetLastComment, data', data, data['itemInfo']);
 
 	chrome.storage.sync.get('lc', function(data) {
-		output('onSetLastComment, BEFORE', data['lc']);
+		debug('onSetLastComment, BEFORE', data['lc']);
 		data['lc'][storyId] = arr;
-		output('onSetLastComment, AFTER', data['lc']);
+		debug('onSetLastComment, AFTER', data['lc']);
 		chrome.storage.sync.set(data);
 	});
 }
@@ -99,9 +91,9 @@ function purgeOldLastComment() {
 
 	chrome.storage.sync.get('lc', function(data) {
 		let items = data['lc'];
-		output('purgeOldLastComment, BEFORE', items);
+		debug('purgeOldLastComment, BEFORE', items);
 		items = _.pickBy(items, (v, k) => today.diff(moment(v[v.length-1], 'x'), 'weeks') < 6);
-		output('purgeOldLastComment, AFTER', items);
+		debug('purgeOldLastComment, AFTER', items);
 		data['lc'] = items;
 		chrome.storage.sync.set(data);
 	});
