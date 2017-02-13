@@ -37,7 +37,8 @@ export default function main() {
 	const $headerTR = $('table#hnmain tr:eq(0)'),
 		$userNav = $headerTR.find('span.pagetop:eq(1)'),
 		$user = $userNav.find('a').first().remove(),
-		$logOut = $userNav.find('a').first().remove();
+		$logOut = $userNav.find('a').first().remove(),
+		logoutText = ($logOut.length == 1 ? $logOut[0].outerHTML : undefined);
 
 	$headerTR
 		.find('span.pagetop:eq(0)')
@@ -57,7 +58,7 @@ export default function main() {
 			{
 				'username': $user.text(),
 				'karma': $userNav.text().replace(/\D/g, ''),
-				'logout': $logOut[0].outerHTML,
+				'logout': logoutText,
 				'user-down': MENUS['user-down'],
 			},
 			{
