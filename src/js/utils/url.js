@@ -1,6 +1,6 @@
 
 function fixUrl(partial) {
-	if (/^(https?)?\/\//.test(partial)) {
+	if (/^https?:\/\//.test(partial)) {
 		return partial;
 	}
 	return getBase(partial);

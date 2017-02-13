@@ -68,7 +68,7 @@ function openLinks(rowNum) {
 									.find('a[href^=item]')
 									.attr('href')
 								),
-		urls = opener.urlOrderBySettings(storyHref, commentHref)
+		urls = opener.urlOrderBySettings(storyHref, commentHref);
 
 		urls = _.uniq(urls);
 		opener.openBySettings(...urls);
