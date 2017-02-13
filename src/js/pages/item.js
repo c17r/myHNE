@@ -11,7 +11,7 @@ import userTracking from '../libs/user-tracking/frontend';
 import highlighter, {PREV, NEXT} from '../libs/highlighter';
 
 const $commentTable = $('table.comment-tree');
-const commentCount = $commentTable.find('tr.athing').length - 1;
+const commentCount = $commentTable.find('tr.athing').length;
 const highlightClass = 'myhne-comment-highlight'
 
 function addAttributes() {
@@ -195,6 +195,6 @@ export default function main() {
 
 	comments.markNewComments($commentTable, storyId)
 		.then(() => {
-			comments.setLastComment(storyId, lastId);
+			comments.setLastComment(storyId, lastId, commentCount);
 		});
 };

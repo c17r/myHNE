@@ -10,7 +10,7 @@ Test page for performance: https://news.ycombinator.com/item?id=13301832
 * Index pages
 	* [ ] New style
 	* [X] New menu/style to access all pages
-	* [ ] New comment count
+	* [X] New comment count
 	* [X] Keyboard controls
 		* j - next story
 		* k - previous story

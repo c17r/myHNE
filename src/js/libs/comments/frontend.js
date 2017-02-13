@@ -123,9 +123,13 @@ function getMassLastComment(storyIds) {
 	})
 }
 
-function setLastComment(storyId, lastId) {
+function setLastComment(storyId, lastId, commentCount) {
+	const itemInfo = {
+		lastId,
+		commentCount
+	};
 	chrome.runtime.sendMessage(
-		{method: 'setlastcomment', data:{storyId, lastId}},
+		{method: 'setlastcomment', data:{ storyId, itemInfo }},
 		() => {}
 	)
 }
@@ -133,11 +137,10 @@ function setLastComment(storyId, lastId) {
 function markNewComments($parent, storyId) {
 	return new Promise((resolve, reject) => {
 		getLastComment(storyId)
-			.then((lastId) => {
-
+			.then((itemInfo) => {
 				let marks = $parent
 						.find('tr.athing')
-						.filter((i, e) => Number(e.id) > lastId)
+						.filter((i, e) => Number(e.id) > itemInfo['lastId'])
 						.addClass('myhne-new-comment');
 
 				while(marks.length > 0) {

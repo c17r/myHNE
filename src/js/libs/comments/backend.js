@@ -2,6 +2,16 @@ import _ from 'lodash';
 import $ from 'jquery';
 import moment from 'moment';
 
+const DEBUG_PRINT = true;
+
+function output() {
+	if (!DEBUG_PRINT)
+		return;
+	for(var i = 0; i < arguments.length; i++)
+		console.log(arguments[i]);
+	console.log('--');
+}
+
 function HNCollapse(entries) {
 	function recurse() {
 		const entry = entries.pop();
@@ -34,8 +44,14 @@ function onGetLastComment(storyId, sendResponse) {
 		const entry = data['lc'][storyId];
 
 		if (entry) {
-			sendResponse(entry[0]);
+			const rv = {
+				lastId: entry[0],
+				commentCount: entry[1],
+			}
+			output('onGetLastComment, found', rv);
+			sendResponse(rv);
 		} else {
+			output('onGetLastComment, not found');
 			sendResponse(null);
 		}
 	});
@@ -50,10 +66,15 @@ function onGetMassLastComment(storyIds, sendResponse) {
 
 function onSetLastComment(data) {
 	const storyId = Number(data['storyId']),
-		lastId = Number(data['lastId']);
+		lastId = Number(data['itemInfo']['lastId']),
+		commentCount = Number(data['itemInfo']['commentCount']);
+
+	output('onSetLastComment, data', data, data['itemInfo']);
 
 	chrome.storage.sync.get('lc', function(data) {
-		data['lc'][storyId] = [lastId, Number(moment.utc().format('x'))]
+		output('onSetLastComment, BEFORE', data['lc']);
+		data['lc'][storyId] = [lastId, commentCount, Number(moment.utc().format('x'))]
+		output('onSetLastComment, AFTER', data['lc']);
 		chrome.storage.sync.set(data);
 	});
 }
@@ -63,7 +84,9 @@ function purgeOldLastComment() {
 
 	chrome.storage.sync.get('lc', function(data) {
 		let items = data['lc'];
-		items = _.pickBy((v, k) => today.diff(moment(v[1]), 'weeks') < 6);
+		output('purgeOldLastComment, BEFORE', items);
+		items = _.pickBy(items, (v, k) => today.diff(moment(v[v.length-1], 'x'), 'weeks') < 6);
+		output('purgeOldLastComment, AFTER', items);
 		data['lc'] = items;
 		chrome.storage.sync.set(data);
 	});

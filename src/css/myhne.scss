@@ -7,6 +7,8 @@ $checkbook-color: #e6e6df;
 $index-hover-color: #dd4b39;
 $menu-hover-color: #FFF;
 
+$dropdown-color: #FFF;
+
 .myhne-new-comment {
 	table {
 		td.ind {
@@ -31,12 +33,6 @@ $menu-hover-color: #FFF;
 
 .myhne-highlight-op {
 	color: $index-hover-color !important;
-}
-
-.myhne-highlight-new-user {
-	font {
-		color: #3c963c;
-	}
 }
 
 .myhne-parent-container {
@@ -141,13 +137,15 @@ $menu-hover-color: #FFF;
 
 .myhne-top-nav {
     padding: 0 10;
+
+	a:hover {
+		color: $dropdown-color !important;
+	}
 }
 
 .myhne-karma {
     color: $karma-color;
 }
-
-$dropdown-color: #FFF;
 
 .dropdown {
 	position: relative;
@@ -179,6 +177,10 @@ $dropdown-color: #FFF;
 				&:last-child {
 				    padding-bottom: 5px;
 				}
+
+				a:hover {
+					color: $dropdown-color;
+				}
 			}
 		}
 	}
@@ -198,52 +200,28 @@ $dropdown-color: #FFF;
 
 body {
   visibility: hidden;
-  margin: 0;
 }
 
-.header-row {
-    height: 40px;
-	background-color: $header-color;
-}
-
-.votearrow {
-    padding-right: 15px !important;
-}
-
-table#hnmain {
-    width: 100% !important;
-}
-
-table.itemlist {
-	margin: 20px auto 0px auto !important;
-
-	tr.athing {
-		&:nth-child(even) {
-			background-color: $checkbook-color;
-
-			td {
-				padding: 5px 0px;
-			}
-		}
-
-		td.title:first-child {
-			width: 80px;
-		}
-
-		td.votelinks {
-			width: 60px;
-		}
-
-		td.title:last-child {
-			padding-right: 18px !important;
-		}
-	}
+table.itemList {
+	width: 100%;
 }
 
 td.subtext a.hnuser, a:hover {
   color: $index-hover-color !important;
 }
 
-.pagetop a:hover {
-    color: $menu-hover-color !important;
+td.subtext {
+	font-size: 9pt !important;
+}
+
+td.title {
+	font-size: 12pt !important;
+}
+
+td.votelinks {
+	width: 30px !important;
+}
+
+tr.spacer {
+	height: 10px !important;
 }

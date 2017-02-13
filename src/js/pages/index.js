@@ -6,119 +6,46 @@ import url from '../utils/url';
 
 import opener from '../libs/opener/frontend';
 import highlighter, {PREV, NEXT} from '../libs/highlighter';
+import comments from '../libs/comments/frontend';
 
 const $storyTable = $('table.itemList');
 const storyCount = $storyTable.find('tr.athing').length - 1;
 const highlightClass = 'myhne-story-highlight'
 
-function removeRank() {
-	$storyTable
-		.find('span[class=rank]')
-		.remove();
-};
-
-function removeScore($parent) {
-	$parent
-		.find('span.score')
-		.remove();
-}
-
-function commentCount($parent) {
-	const $comment = $parent.find('a[href^=item]:eq(-1)'),
-		commentText = $comment.text();
-
-	let commentCount = 'N/A',
-		commentUrl = '';
-
-	if (/discuss/.test(commentText)) {
-		commentCount = '0';
-		commentUrl = $comment.attr('href');
-	}
-	else if (/comment/.test(commentText)) {
-		commentCount = commentText.split('\xa0')[0];
-		commentUrl = $comment.attr('href');
-	}
-
-	let $newComments = undefined;
-	if (commentUrl == '') {
-		$newComments = $('<span/>');
-	} else {
-		$newComments = $('<a/>').attr('href', commentUrl);
-	}
-
-	$newComments.addClass('myhne-comment-count');
-	$newComments.append(commentCount);
-
-	$parent
-		.parent()
-		.prev()
-		.find('td.title:eq(0)')
-		.append($newComments)
-
-}
-
-function moveUser($parent) {
-	const $user = $parent
-					.find('a.hnuser')
-					.remove();
-
-	const $newUser = $('<span/>')
-						.addClass('myhne-submitter')
-						.append('by ')
-						.append($user);
-
-	$parent
-		.parent()
-		.prev()
-		.find('td.title:eq(1)')
-		.append($newUser);
-}
-
-function moveTime($parent) {
-	const $age = $subText
-					.find('span.age')
-					.remove()
-					.removeClass('age')
-					.addClass('myhne-age');
-
-	$parent
-		.parent()
-		.prev()
-		.find('td.title:eq(1)')
-		.append($age);
-}
-
-function addActions($parent) {
-	const $actions = $('<span/>')
-						.addClass('myhne-actions')
-						.append(
-							$parent.find('a[href^=flag]'),
-							$parent.find('a[href^=vouch]'),
-							$parent.find('a[href^="https://hn.algolia.com/?query="]'),
-							$parent.find('a[href^="https://www.google.com/search?q="]')
-						);
-	$parent
-		.parent()
-		.prev()
-		.find('td.title:eq(1)')
-		.append($actions)
-}
-
-function reDoSubText() {
+function rankToCommentCount() {
 	$storyTable
 		.find('td.subtext')
 		.each(function() {
-			const $subText = $(this);
+			const $subText = $(this),
+				$story = $subText.parent().prev(),
+				storyId = $story.attr('id'),
+				$comments = $subText.children('a[href^=item]:last').remove(),
+				$rank = $story.find('span.rank').empty();
+			let commentText = $comments.text();
 
-			removeScore($subText);
-
-			commentCount($subText);
-
-			moveUser($subText);
-
-			addActions($subText);
-
-			$subText.remove();
+			if (/discuss/.test(commentText)) {
+				commentText = '0';
+			} else if (/comment/.test(commentText)) {
+				commentText = commentText.split('\xa0')[0];
+			} else {
+				commentText = 'N/A';
+				$comments = $('<span/>');
+			}
+			comments.getLastComment(storyId)
+				.then((itemInfo) => {
+					if (commentText != 'N/A') {
+						console.log(commentText);
+						console.log(itemInfo['commentCount']);
+						const newCount = Number(commentText) - itemInfo['commentCount'];
+						commentText = `${newCount}/${commentText}`;
+					}
+					$comments.text(commentText);
+					$rank.append($comments);
+				})
+				.catch(() => {
+					$comments.text(commentText);
+					$rank.append($comments);
+				});
 		});
 };
 
@@ -163,8 +90,6 @@ function addKeyboardControls() {
 }
 
 export default function main() {
-
-	removeRank();
-	reDoSubText();
+	rankToCommentCount();
 	addKeyboardControls();
 };
