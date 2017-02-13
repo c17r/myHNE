@@ -33,6 +33,7 @@
 		* t - first non-collapsed comment
 		* b - last non-collapsed comment
 		* p - show parent
+		* ? - next non-collapsed new comment
 * User Tagging
 	* [ ] upvote count for user (stored in Chrome profile)
 	* [ ] tag note for user (stored in Chrome profile)
