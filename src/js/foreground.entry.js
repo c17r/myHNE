@@ -6,11 +6,18 @@ import item from './pages/item';
 
 const PATHS = {
 	'index': [
-		'/',
 		'/news',
 		'/newest',
+
+		'/best',
 		'/show',
+		'/shownew',
+		'/classic',
+		'/active',
 		'/ask',
+		'/noobstories',
+
+		'/submitted',
 	],
 
 	'item': [

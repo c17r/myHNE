@@ -1,12 +1,15 @@
 Test page: https://news.ycombinator.com/item?id=13240811
+
 Test page for highlight-op: https://news.ycombinator.com/item?id=13303346
+
 Test page for parent: https://news.ycombinator.com/item?id=13326792#13326952
+
 Test page for performance: https://news.ycombinator.com/item?id=13301832
 
 # Features:
 * Index pages
 	* [ ] New style
-	* [ ] New menu to access all pages
+	* [X] New menu/style to access all pages
 	* [ ] New comment count
 	* [X] Keyboard controls
 		* j - next story
