@@ -1,9 +1,9 @@
 {
-  "title": "myHNE",
+  "title": "mYhne",
   "name": "myhne",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "My Hacker News Experience",
-  "author": "myHNE",
+  "author": "357 Software",
   "license": "ISC",
   "main": "index.js",
   "repository": {
