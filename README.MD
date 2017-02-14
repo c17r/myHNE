@@ -1,3 +1,25 @@
+# Description
+
+Make Y Combinator's Hacker News website just a little friendlier to use.
+Like many others, I enjoy the articles and even comments on Hacker News.
+Out of all the community sites, their moderators do a great job at keeping
+the signal-to-noise ration high.  The downside to Hacker News is the site
+feels like it was built in the 90s: the ability to collapse threads was
+added only in 2016.
+
+Enhancements added:
+* Keyboard navigation of index and item pages
+* Additional thread functions (Expand All, Top Level) use Hacker New's built-in
+	functions so everything is saved server-side
+* Information for our enhancements (comment count, last ID, etc) are stored in
+	Chrome's sync storage is everything stays in sync across machines.
+
+Inspiration and bits shamelessly stolen from
+* HNES
+* Redit Enhancement Suite
+
+# Dev
+
 * Test page: https://news.ycombinator.com/item?id=13240811
 * Test page for highlight-op: https://news.ycombinator.com/item?id=13303346
 * Test page for parent: https://news.ycombinator.com/item?id=13326792#13326952
