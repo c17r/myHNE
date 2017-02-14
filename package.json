@@ -1,8 +1,8 @@
 {
-  "title": "mYhne",
+  "title": "mYHNE",
   "name": "myhne",
-  "version": "0.0.3",
-  "description": "My Hacker News Experience",
+  "version": "0.0.4",
+  "description": "My Y Combinator Hacker News Experience",
   "author": "357 Software",
   "license": "ISC",
   "main": "index.js",
