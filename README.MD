@@ -56,6 +56,7 @@ Inspiration and bits shamelessly stolen from
 		* b - last non-collapsed comment
 		* p - show parent
 		* ? - next non-collapsed new comment
+		* o - open links in the current selected comment
 * User Tagging
 	* [ ] upvote count for user (stored in Chrome profile)
 	* [ ] tag note for user (stored in Chrome profile)
@@ -67,3 +68,4 @@ Inspiration and bits shamelessly stolen from
 # Future:
 * [ ] More than just Chrome
 * [ ] Async loading modular system for functionality, like RES
+* [ ] Hightlight new
