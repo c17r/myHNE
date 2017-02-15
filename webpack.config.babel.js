@@ -19,9 +19,11 @@ const browserConfig = {
 	},
 	edge: {
 		target: 'edge',
-		entry: 'edge/manifest.json',
+		entry: 'edge/appxmanifest.xml',
 		environment: 'edge/environment',
-		output: 'edge',
+		output: 'edgeextension/manifest/Extension',
+		outputFilename: '../appxmanifest.xml',
+		noZip: true,
 	},
 	safari: {
 		target: 'safari',
@@ -58,7 +60,7 @@ const browsers = (
 const shouldZip = !!yargs.argv.zip;
 const isProduction = process.env.NODE_ENV !== 'development';
 
-const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, environment, output }) => {
+const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, environment, outputFilename, output, noZip }) => {
 	// extra transforms for Safari
 	const babelConfig = {
 		...babelrc,
@@ -66,12 +68,22 @@ const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, enviro
 		babelrc: false,
 	};
 
+	if (target === 'edge') {
+		// Edge has problems with destructuring in arrow functions:
+		// In Edge 14, object destructuring with default values in arrow functions doesn't parse
+		// In Edge 15 this is fixed, but there are other issues with destructuring (soon fixed)
+		babelConfig.plugins.push('transform-es2015-arrow-functions');
+	} else if (target === 'firefox') {
+		// The Firefox API can't deal with normal array destructuring
+		babelConfig.plugins.push('transform-es2015-destructuring');
+	}
+
 	return {
 		entry: `extricate!interpolate!./${entry}`,
 		bail: isProduction,
 		output: {
 			path: join(__dirname, 'dist', output),
-			filename: basename(entry),
+			filename: outputFilename || basename(entry),
 		},
 		devtool: isProduction ? '#source-map' : '#cheap-source-map',
 		resolve: {
@@ -92,7 +104,7 @@ const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, enviro
 			],
 			noParse: [
 				// to use `require` in Firefox and Node
-				/_nativeRequire\.js$/,
+				/nativeRequire\.js$/,
 			],
 		},
 		plugins: [
@@ -103,7 +115,7 @@ const configs = browsers.map(b => browserConfig[b]).map(({ target, entry, enviro
 				},
 			}),
 			new InertEntryPlugin(),
-			(shouldZip && new ZipPlugin({
+			(shouldZip && !noZip && new ZipPlugin({
 				path: join('..', 'zip'),
 				filename: output,
 			})),
