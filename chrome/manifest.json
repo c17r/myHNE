@@ -15,10 +15,8 @@
 		"chrome_style": true
 	},
 
-
 	"background": {
 		"scripts": [
-			"{{./options.js}}",
 			"{{./background.entry.js}}"
 		]
 	},
@@ -44,12 +42,10 @@
 			],
 
 			"js": [
+				"{{./options.js}}",
 				"{{../src/js/foreground.entry.js}}"
 			]
 
 		}
-	],
-
-	"web_accessible_resources": []
-
+	]
 }
