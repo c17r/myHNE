@@ -68,4 +68,4 @@ Inspiration and bits shamelessly stolen from
 # Future:
 * [ ] More than just Chrome
 * [ ] Async loading modular system for functionality, like RES
-* [ ] Hightlight new
+* [ ] Hightlight new stories on homepage?
