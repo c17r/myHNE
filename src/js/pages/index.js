@@ -24,12 +24,13 @@ function rankToCommentCount() {
 				.each((i, e) => {
 					const $subText = $(e),
 						$story = $subText.parent().prev(),
-						$comments = $subText.children('a[href^=item]:last').remove(),
 						$rank = $story.find('span.rank').empty(),
 						storyId = $story.attr('id'),
 						entry = _.find(entries, (v, k) => k == storyId);
 
-					let commentText = $comments.text();
+					let $comments = $subText.children('a[href^=item]:last').remove(),
+						commentText = $comments.text();
+
 					if (/discuss/.test(commentText)) {
 						commentText = '0';
 					} else if (/comment/.test(commentText)) {
