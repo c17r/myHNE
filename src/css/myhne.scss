@@ -37,6 +37,7 @@ $dropdown-color: #FFF;
 
 .myhne-parent-container {
 	display: none;
+	font-size: 10pt;
 	border: #000 2px solid;
 	width: 40%;
 	position: absolute;
@@ -210,18 +211,18 @@ td.subtext a.hnuser, a:hover {
   color: $index-hover-color !important;
 }
 
-td.subtext {
-	font-size: 9pt !important;
-}
-
-td.title {
-	font-size: 12pt !important;
-}
-
 td.votelinks {
 	width: 30px !important;
 }
 
 tr.spacer {
 	height: 10px !important;
+}
+
+td.title, .comment {
+	font-size: 12pt !important;
+}
+
+td.subtext, .comhead {
+	font-size: 9pt !important;
 }
