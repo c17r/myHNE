@@ -1,6 +1,5 @@
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
-import moment from 'moment';
 
 import debug from '../../utils/debug'
 
@@ -25,6 +24,16 @@ function serverCall(url) {
 	});
 }
 
+function dateDiff(pastDate, recentDate, datePart) {
+	const part = { w:604800000,
+                   d:86400000,
+                   h:3600000,
+                   n:60000,
+                   s:1000 },
+		diff = Number(recentDate) - Number(pastDate);
+	return Math.floor(diff/part[datePart.toLowerCase()]);
+}
+
 function lcToItem(arr) {
 	return {
 		lastId: arr[0],
@@ -39,7 +48,8 @@ function itemToLc(item) {
 		Number(item['lastId']),
 		Number(item['commentCount']),
 
-		Number(moment.utc().format('x')),
+		// always last
+		(new Date().getTime()),
 	]
 }
 
@@ -108,12 +118,12 @@ function onSetLastComment(data) {
 }
 
 function purgeOldLastComment() {
-	const today = moment.utc();
+	const today = new Date().getTime();
 
 	chrome.storage.sync.get('lc', function(data) {
 		let items = data['lc'];
 		debug('purgeOldLastComment, BEFORE', items);
-		items = pickBy(items, (v, k) => today.diff(moment(v[v.length-1], 'x'), 'weeks') < 6);
+		items = pickBy(items, (v, k) => dateDiff(v[v.length-1], today, 'w') < 6);
 		debug('purgeOldLastComment, AFTER', items);
 		data['lc'] = items;
 		chrome.storage.sync.set(data);
