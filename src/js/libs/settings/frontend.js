@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import each from 'lodash/each';
+import find from 'lodash/find';
 
 import settingsTemplate from './templates/settings.mustache';
 
@@ -54,7 +55,7 @@ function getAllSettings() {
 			if (!settings)
 				settings = {}
 
-			_.each(SETTINGS_OPTIONS, (setting) => {
+			each(SETTINGS_OPTIONS, (setting) => {
 				const name = setting['name'],
 					options = setting['options'],
 					option_default = setting['default'];
@@ -63,7 +64,7 @@ function getAllSettings() {
 				{
 					settings[name] = option_default;
 				} else {
-					const val = _.find(options, (v) => v['value'] == settings[name]);
+					const val = find(options, (v) => v['value'] == settings[name]);
 					if (!val) {
 						settings[name] = option_default;
 					}
@@ -76,12 +77,12 @@ function getAllSettings() {
 }
 
 function saveSetting(name, value) {
-	const item = _.find(SETTINGS_OPTIONS, (v) => v['name'] == name);
+	const item = find(SETTINGS_OPTIONS, (v) => v['name'] == name);
 	if (!item) {
 		alert('unknown setting');
 		return;
 	}
-	const item_value = _.find(item['options'], (v) => v['value'] == value);
+	const item_value = find(item['options'], (v) => v['value'] == value);
 	if (!item_value) {
 		alert('unknown setting value');
 		return;
@@ -97,7 +98,7 @@ function saveSetting(name, value) {
 function createOptions($parent, currentSettings) {
 	$parent.prepend(settingsTemplate.render({settings:SETTINGS_OPTIONS}));
 
-	_.each(currentSettings, (v, k) => {
+	each(currentSettings, (v, k) => {
 		$parent.find(`#${k} option[value='${v}']`).attr('selected', true);
 	});
 }
@@ -106,7 +107,7 @@ function saveOptions($parent) {
 	return new Promise((resolve, reject) => {
 		let newSettings = {};
 
-		_.each(SETTINGS_OPTIONS, (item) => {
+		each(SETTINGS_OPTIONS, (item) => {
 			const name = item['name'];
 			newSettings[item['name']] = item['default'];
 

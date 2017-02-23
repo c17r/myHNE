@@ -26,7 +26,6 @@ expand(TR):
 	* TR > .togg *text* set to "[-]"
 */
 import $ from 'jquery';
-import moment from 'moment';
 
 import inject from '../../utils/inject';
 

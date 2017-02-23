@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import _ from 'lodash';
+import find from 'lodash/find';
+import uniq from 'lodash/uniq';
 
 import keyboard from '../utils/keyboard';
 import url from '../utils/url';
@@ -26,7 +27,7 @@ function rankToCommentCount() {
 						$story = $subText.parent().prev(),
 						$rank = $story.find('span.rank').empty(),
 						storyId = $story.attr('id'),
-						entry = _.find(entries, (v, k) => k == storyId);
+						entry = find(entries, (v, k) => k == storyId);
 
 					let $comments = $subText.children('a[href^=item]:last').remove(),
 						commentText = $comments.text();
@@ -68,10 +69,11 @@ function openLinks(rowNum) {
 		commentHref = url.fixUrl($current
 									.find('a[href^=item]')
 									.attr('href')
-								),
-		urls = opener.urlOrderBySettings(storyHref, commentHref);
+								);
 
-		urls = _.uniq(urls);
+	let urls = opener.urlOrderBySettings(storyHref, commentHref);
+
+		urls = uniq(urls);
 		opener.openBySettings(...urls);
 }
 

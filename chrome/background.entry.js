@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import comments from '../src/js/libs/comments/backend';
 import opener from '../src/js/libs/opener/backend';
 import debug from '../src/js/utils/debug';

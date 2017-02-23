@@ -1,8 +1,29 @@
-import _ from 'lodash';
-import $ from 'jquery';
+import pickBy from 'lodash/pickBy';
+import mapValues from 'lodash/mapValues';
 import moment from 'moment';
 
 import debug from '../../utils/debug'
+
+function serverCall(url) {
+	return new Promise((resolve, reject) => {
+		const request = new XMLHttpRequest();
+		request.open('GET', url, true);
+
+		request.onload = function() {
+			if (request.status >= 200 && request.status < 400) {
+				const response = request.responseText;
+				resolve(response);
+			} else {
+				reject();
+			}
+		};
+		request.onerror = function() {
+			reject();
+		};
+
+		request.send();
+	});
+}
 
 function lcToItem(arr) {
 	return {
@@ -32,15 +53,15 @@ function HNCollapse(entries) {
 
 		debug('HNCollapse', `Entry: ${entry.id}, ${entry.un}`);
 		const url = `https://news.ycombinator.com/collapse?id=${entry.id}` + (entry.un ? '&un=true': '');
-		$.get(url)
-			.done(() => {
+		serverCall(url)
+			.then(() => {
 				setTimeout(recurse, 0);
 			})
-			.fail(() => {
+			.catch(() => {
 				entries.push(entry);
 				debug('HNCollapse', `Failed, retrying`);
 				setTimeout(recurse, 250);
-			})
+			});
 	}
 	recurse();
 }
@@ -67,8 +88,8 @@ function onGetLastComment(storyId, sendResponse) {
 function onGetMassLastComment(storyIds, sendResponse) {
 	chrome.storage.sync.get('lc', function(data) {
 		const items = data['lc'],
-				rv = _.pickBy(items, (v, k) => storyIds.indexOf(k) != -1);
-		sendResponse(_.mapValues(rv, (arr) => lcToItem(arr)));
+				rv = pickBy(items, (v, k) => storyIds.indexOf(k) != -1);
+		sendResponse(mapValues(rv, (arr) => lcToItem(arr)));
 	});
 }
 
@@ -92,7 +113,7 @@ function purgeOldLastComment() {
 	chrome.storage.sync.get('lc', function(data) {
 		let items = data['lc'];
 		debug('purgeOldLastComment, BEFORE', items);
-		items = _.pickBy(items, (v, k) => today.diff(moment(v[v.length-1], 'x'), 'weeks') < 6);
+		items = pickBy(items, (v, k) => today.diff(moment(v[v.length-1], 'x'), 'weeks') < 6);
 		debug('purgeOldLastComment, AFTER', items);
 		data['lc'] = items;
 		chrome.storage.sync.set(data);
