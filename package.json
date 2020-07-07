@@ -63,7 +63,7 @@
     "escape-string-regexp": "1.0.5",
     "favico.js": "0.3.10",
     "intersection-observer": "0.2.1",
-    "jquery": "3.4.0",
+    "jquery": "3.5.1",
     "jquery-sortable": "0.9.13",
     "jquery.tokeninput": "Reddit-Enhancement-Suite/jquery-tokeninput",
     "lodash": "4.17.15",
