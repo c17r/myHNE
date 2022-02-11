@@ -120,7 +120,7 @@
     "manifoldjs": "^0.7.6",
     "mustache-loader": "1.4.3",
     "nightwatch": "1.7.11",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "nyc": "15.1.0",
     "postcss-loader": "6.1.1",
     "progress-bar-webpack-plugin": "2.1.0",
