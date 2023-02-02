@@ -116,7 +116,7 @@
     "jscodeshift": "^0.13.0",
     "jsdom": "17.0.0",
     "json-loader": "0.5.7",
-    "jszip": "3.7.1",
+    "jszip": "3.8.0",
     "manifoldjs": "^0.7.6",
     "mustache-loader": "1.4.3",
     "nightwatch": "1.7.11",
